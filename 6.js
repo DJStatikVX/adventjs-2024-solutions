@@ -46,14 +46,14 @@
 function inBox(box) {
   const gift = '*'
 
-  const giftLineIndex = box.findIndex(line => line.includes(gift))
-
-  if (giftLineIndex <= 0 || giftLineIndex === box.length - 1) {
-    return false
+  for (let i = 1; i < box.length - 1; i++) {
+    const line = box[i]
+    const giftLocation = line.indexOf(gift)
+    
+    if (giftLocation > 0 && giftLocation < line.length - 1) {
+      return true
+    }
   }
 
-  const giftLine = box[giftLineIndex]
-  const giftLocation = [...giftLine].findIndex(char => char === gift)
-  
-  return giftLocation > 0 && giftLocation < giftLine.length - 1
+  return false
 }
