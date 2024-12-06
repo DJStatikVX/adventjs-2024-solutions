@@ -55,17 +55,9 @@ organizeInventory(inventary2)
 */
 
 function organizeInventory(inventory) {
-  const groupedByCategoryInventory = Object.groupBy(inventory, ({ category }) => category)
-  
-  const result = {}
-  for (const [category, gifts] of Object.entries(groupedByCategoryInventory)) {
-  	result[category] = {}
-  	for (const gift of gifts) {
-    	result[category][gift.name] = gifts
-      	.filter(g => g.name === gift.name)
-        .reduce((acc, curr) => curr.quantity + acc, 0)
-    }
-  }
-  
-  return result
+  return inventory.reduce((result, { name, quantity, category }) => {
+    result[category] ??= {};
+    result[category][name] = (result[category][name] || 0) + quantity;
+    return result;
+  }, {});
 }
